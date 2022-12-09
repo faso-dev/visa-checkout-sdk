@@ -1,0 +1,30 @@
+{
+  "name": "faso-dev/visa-checkout-sdk",
+  "description": "A PHP SDK for the Visa Checkout API",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "FasoDev\\VisaCheckoutSdk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "FasoDev\\VisaCheckoutSdk\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "faso-dev",
+      "email": "jeromeonadja28@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5.26"
+  }
+}
