@@ -1,4 +1,4 @@
 .idea
 .vscode
-phpunit.result.cache
+.phpunit.result.cache
 vendor
