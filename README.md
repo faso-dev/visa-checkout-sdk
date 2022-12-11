@@ -62,15 +62,15 @@ Here is an example of how to use the library to create a payment using a Visa ca
     );
     // create a payment
 	try {
-		$transaction = (new CheckoutSdk($payment))->createPayment(
+		$transaction = (new CheckoutSdk($payment))->makePayment(
 			100.00,
 			'USD',
 			$visaCard,
 			'Payment description'
 		);
-		if ($transaction->isSuccessful()) {
+		if ($transaction->successfull()) {
 			// add transaction info to your database(id, status, amount, currency, description, user_id, etc.)
-		} elseif ($transaction->isDeclined()) {
+		} elseif ($transaction->declined()) {
 			// retry payment or do something
 		} else {
 			// notify user or do something
