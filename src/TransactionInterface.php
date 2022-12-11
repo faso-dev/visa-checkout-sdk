@@ -16,9 +16,9 @@
 		
 		public function cardData(): CardDataInterface;
 		
-		public function isSuccessful(): bool;
+		public function successfull(): bool;
 		
-		public function isDeclined(): bool;
+		public function declined(): bool;
 		
-		public function isError(): bool;
+		public function failded(): bool;
 	}

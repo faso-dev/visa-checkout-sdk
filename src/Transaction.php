@@ -75,17 +75,17 @@
 			return $this->cardData;
 		}
 		
-		public function isSuccessful(): bool
+		public function successfull(): bool
 		{
 			return $this->status === 'SUCCESS';
 		}
 		
-		public function isDeclined(): bool
+		public function declined(): bool
 		{
 			return $this->status === 'DECLINED';
 		}
 		
-		public function isError(): bool
+		public function failded(): bool
 		{
 			return $this->status === 'ERROR';
 		}

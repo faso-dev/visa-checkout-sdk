@@ -11,7 +11,7 @@
 			$this->payment = $payment;
 		}
 		
-		public function createPayment(
+		public function makePayment(
 			float             $amount,
 			string            $currency,
 			CardDataInterface $cardData,
