@@ -2,8 +2,7 @@
 	
 	namespace FasoDev\VisaCheckoutSdk;
 	
-	use Psr\Http\Client\ClientExceptionInterface;
-	use function var_dump;
+	use FasoDev\SimpleCurlClient\Http\ClientResponseInterface;
 	
 	trait CheckoutRequestTrait
 	{
@@ -45,7 +44,7 @@
 			string $method,
 			string $url,
 			array  $body = [],
-		): CurlClientResponseInterface
+		): ClientResponseInterface
 		{
 			if ($method === 'GET') {
 				$url .= '?' . http_build_query($body);

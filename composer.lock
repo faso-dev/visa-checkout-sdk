@@ -4,8 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55a07724e70779c5cec2b7045cc0a74c",
-    "packages": [],
+    "content-hash": "b5117561ccd9c3f3a2ed9a2fb670c206",
+    "packages": [
+        {
+            "name": "faso-dev/simple-curl-client",
+            "version": "v0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/faso-dev/simple-curl-client.git",
+                "reference": "3e8e220f19e9eedc6f79bb40b7178ac8e532f69d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/faso-dev/simple-curl-client/zipball/3e8e220f19e9eedc6f79bb40b7178ac8e532f69d",
+                "reference": "3e8e220f19e9eedc6f79bb40b7178ac8e532f69d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "9.5.27"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FasoDev\\SimpleCurlClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jerome Onadja",
+                    "email": "jeromeonadja28@gmail.com"
+                }
+            ],
+            "description": "A small client that wrap curl for get and post request",
+            "support": {
+                "issues": "https://github.com/faso-dev/simple-curl-client/issues",
+                "source": "https://github.com/faso-dev/simple-curl-client/tree/v0.0.1"
+            },
+            "time": "2023-01-12T12:43:09+00:00"
+        }
+    ],
     "packages-dev": [
         {
             "name": "doctrine/instantiator",

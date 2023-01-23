@@ -2,6 +2,7 @@
 	
 	namespace FasoDev\VisaCheckoutSdk\Tests;
 	
+	use FasoDev\SimpleCurlClient\Curl\CurlClientBuilder;
 	use FasoDev\VisaCheckoutSdk\CurlClient;
 	use PHPUnit\Framework\TestCase;
 	use function var_dump;
@@ -10,27 +11,28 @@
 	{
 		public function testSuccessfullGetRequest()
 		{
-			$response = CurlClient::make()->get('https://httpbin.org/get');
+			$response = CurlClientBuilder::create()->build()->get('https://httpbin.org/get');
 			$this->assertEquals(200, $response->status());
 			$this->assertNotEmpty($response->body());
 		}
 		
 		public function testFailedGetRequest()
 		{
-			$response = CurlClient::make()->get('https://httpbin.org/status');
+			$response = CurlClientBuilder::create()->build()->get('https://httpbin.org/status');
 			$this->assertEquals(404, $response->status());
-			var_dump($response->body());
 			$this->assertNotEmpty($response->body());
 		}
 		
 		public function testSuccessfullPostRequest()
 		{
-			$response = CurlClient::make()->post('https://jsonplaceholder.typicode.com/posts', [
+			$response = CurlClientBuilder::create()->build()->post('https://jsonplaceholder.typicode.com/posts', [
 				'title' => 'foo',
 				'body' => 'bar',
 				'userId' => 1,
 			], [
-				'Content-Type: application/json; charset=UTF-8',
+				'headers' => [
+					'Content-Type' => 'application/json; charset=UTF-8',
+				],
 			]);
 			$this->assertEquals(201, $response->status());
 			$this->assertNotEmpty($response->json());

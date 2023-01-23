@@ -2,6 +2,8 @@
 	
 	namespace FasoDev\VisaCheckoutSdk;
 	
+	use FasoDev\SimpleCurlClient\Curl\CurlRequestErrorException;
+	
 	class VisaPay implements PaymentInterface
 	{
 		use CheckoutRequestTrait;
@@ -20,6 +22,7 @@
 		
 		/**
 		 * @throws PaymentException
+		 * @throws CurlRequestErrorException
 		 */
 		public function createPayment(
 			float             $amount,

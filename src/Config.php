@@ -2,6 +2,9 @@
 	
 	namespace FasoDev\VisaCheckoutSdk;
 	
+	use FasoDev\SimpleCurlClient\Curl\CurlClientBuilder;
+	use FasoDev\SimpleCurlClient\Http\ClientInterface;
+	
 	class Config
 	{
 		private CredentialsInterface $credentials;
@@ -18,7 +21,9 @@
 		
 		private string $checkoutEndpoint = 'checkout/v2/checkouts';
 		
-		private ?CurlClientInterface $httpClient = null;
+		private ?ClientInterface $httpClient = null;
+		
+		private CurlClientBuilder $httpClientBuilder;
 		
 		private bool $sslVerification = true;
 		
@@ -28,24 +33,14 @@
 		
 		private function __construct(
 			CredentialsInterface $credentials,
-			CurlClientInterface  $httpClient = null,
+			ClientInterface      $httpClient = null,
 		)
 		{
 			if (null === $this->singleton) {
 				$this->credentials = $credentials;
-				$this->putDefaultRequestHeaders();
+				$this->httpClientBuilder = CurlClientBuilder::create();
 				if (null === $this->httpClient) {
-					$this->httpClient = $httpClient ?: CurlClient::make(
-						$this->requestHeaders,
-						[
-							CURLOPT_TIMEOUT => $this->timeout,
-							CURLOPT_CONNECTTIMEOUT => $this->connectTimeout,
-							CURLOPT_PROXY => $this->proxy,
-							CURLOPT_SSL_VERIFYPEER => $this->sslVerification,
-							CURLOPT_SSL_VERIFYHOST => $this->sslVerification,
-							CURLOPT_USERAGENT => $this->userAgent,
-						]
-					);
+					$this->httpClient = $httpClient ?: $this->httpClientBuilder->build();
 				}
 				$this->singleton = $this;
 			}
@@ -55,7 +50,7 @@
 		
 		private function putDefaultRequestHeaders(): void
 		{
-			$this->requestHeaders = [
+			$this->httpClientBuilder->defineHeader([
 				'Accept' => 'application/json',
 				'Content-Type' => 'application/json',
 				'Authorization' => 'Basic ' . $this->credentials->accessToken(),
@@ -64,10 +59,10 @@
 				'Accept-Language' => 'en_US',
 				'Cache-Control' => 'no-cache',
 				'Pragma' => 'no-cache'
-			];
+			]);
 		}
 		
-		public static function make(CredentialsInterface $credentials, CurlClientInterface $httpClient = null): self
+		public static function make(CredentialsInterface $credentials, ClientInterface $httpClient = null): self
 		{
 			return new self($credentials, $httpClient);
 		}
@@ -104,7 +99,7 @@
 		public function putRequestHeaders(array $requestHeaders): self
 		{
 			$this->requestHeaders = $requestHeaders;
-			
+			$this->httpClientBuilder->defineHeader($requestHeaders);
 			return $this;
 		}
 		
@@ -116,7 +111,7 @@
 		public function putTimeout(int $timeout): self
 		{
 			$this->timeout = $timeout;
-			
+			$this->httpClientBuilder->defineTimeout($timeout);
 			return $this;
 		}
 		
@@ -128,6 +123,7 @@
 		public function putProxy(?string $proxy): self
 		{
 			$this->proxy = $proxy;
+			$this->httpClientBuilder->defineProxy($proxy);
 			
 			return $this;
 		}
@@ -140,7 +136,7 @@
 		public function putConnectTimeout(int $connectTimeout): self
 		{
 			$this->connectTimeout = $connectTimeout;
-			
+			$this->httpClientBuilder->defineConnectTimeout($connectTimeout);
 			return $this;
 		}
 		
@@ -156,12 +152,12 @@
 			return $this;
 		}
 		
-		public function httpClient(): ?CurlClientInterface
+		public function httpClient(): ?ClientInterface
 		{
 			return $this->httpClient;
 		}
 		
-		public function putHttpClient(CurlClientInterface $httpClient): self
+		public function putHttpClient(ClientInterface $httpClient): self
 		{
 			$this->httpClient = $httpClient;
 			
@@ -176,13 +172,14 @@
 		public function disableSslVerification(): self
 		{
 			$this->sslVerification = false;
-			
+			$this->httpClientBuilder->defineSslVerifyHost(false);
 			return $this;
 		}
 		
 		public function enableSslVerification(): self
 		{
 			$this->sslVerification = true;
+			$this->httpClientBuilder->defineSslVerifyHost(true);
 			
 			return $this;
 		}
@@ -195,7 +192,7 @@
 		public function putUserAgent(string $userAgent): self
 		{
 			$this->userAgent = $userAgent;
-			
+			$this->httpClientBuilder->defineUserAgent($userAgent);
 			return $this;
 		}
 		
@@ -205,6 +202,5 @@
 		}
 		
 	}
-	
 	
 	

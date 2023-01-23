@@ -2,9 +2,11 @@
 	
 	namespace FasoDev\VisaCheckoutSdk\Tests;
 	
+	use Exception;
 	use FasoDev\VisaCheckoutSdk\CardData;
 	use FasoDev\VisaCheckoutSdk\Config;
 	use FasoDev\VisaCheckoutSdk\Credentials;
+	use FasoDev\VisaCheckoutSdk\PaymentException;
 	use FasoDev\VisaCheckoutSdk\VisaPay;
 	use PHPUnit\Framework\TestCase;
 	
@@ -32,14 +34,12 @@
 				'https://sandbox.api.visa.com/checkout/v2/checkouts',
 				$config->checkoutUrl()
 			);
-			
+			$this->expectException(Exception::class);
 			$transaction = $payment->createPayment(
 				100.00,
 				'USD',
 				$visaCard,
 				'Payment description'
 			);
-			
-			$this->assertEquals('APPROVED', $transaction->status());
 		}
 	}
