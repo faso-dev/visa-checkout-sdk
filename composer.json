@@ -27,7 +27,7 @@
   "require-dev": {
     "phpunit/phpunit": "^9.5.26"
   },
-    "scripts": {
-        "test": "./vendor/bin/phpunit --configuration phpunit.xml"
-    }
+  "scripts": {
+    "test": "./vendor/bin/phpunit --configuration phpunit.xml"
+  }
 }
